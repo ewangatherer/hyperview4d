@@ -1,0 +1,5 @@
+{
+  "name": "HyperView 4D",
+  "description": "An interactive 4D geometry visualizer allowing users to explore hypercubes, pentachorons, and other 4D polytopes with AI-powered insights.",
+  "requestFramePermissions": []
+}
