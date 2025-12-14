@@ -199,6 +199,14 @@ const HyperShapeCanvas: React.FC<Props> = ({ shape, speeds, isPlaying, scale }) 
           // Fade out points that aren't part of the target shape
           const isTarget = idx < targetVertices.length;
           
+          // If it's an extra vertex (ghost) and it has collapsed to near-zero, DO NOT RENDER IT.
+          if (!isTarget) {
+             const v = currentVertices[idx];
+             // Check if it's effectively at the center (collapsed)
+             const distSq = v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w;
+             if (distSq < 0.001) return;
+          }
+
           // Radius: 
           const radius = Math.max(1, 3 * p.scale); 
           
