@@ -1,20 +1,29 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# HyperView 4D
 
-# Run and deploy your AI Studio app
+An interactive **visualizer for 4-dimensional objects** (polytopes). This application enables users to explore the fascinating world of higher-dimensional geometry by projecting 4D shapes into 3D space, and then to the 2D screen.
 
-This contains everything you need to run your app locally.
+Interacting with 4D objects can be mind-bending. By rotating the object along planes involving the 4th dimension (W-axis), you can observe "inside-out" transformations that are mathematically consistent but visually surreal.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1-UJr5Ga9e94PP4qV3CRupTHV9U-LCYdU
+## Features
+
+- **Interactive 4D Rotation**: Control rotation on 6 separate planes:
+  - **3D Planes**: XY, XZ, YZ
+  - **4D Planes**: XW, YW, ZW (The "magic" rotations)
+- **Shape Library**: specialized 4D polytopes including the Tesseract.
+- **Dynamic Rendering**: Real-time projection from 4D $\to$ 3D $\to$ 2D using HTML5 Canvas.
+- **Customizable Presets**: From "Slow & Hypnotic" to "Chaotic" rotation modes.
+
+## Tech Stack
+
+- **Frontend**: React 19, TypeScript
+- **Rendering**: Custom 4D rendering engine on HTML5 Canvas
+- **Build Tool**: Vite
 
 ## Run Locally
 
 **Prerequisites:**  Node.js
 
-
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Run the app:
    `npm run dev`

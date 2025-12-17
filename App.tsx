@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { SHAPES, DEFAULT_SPEEDS } from './constants';
 import HyperShapeCanvas from './components/HyperShapeCanvas';
-import { getShapeInsight } from './services/geminiService';
+
 import { RotationSpeeds } from './types';
 
 // Icons
 const PlayIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
 const PauseIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>;
-const SparklesIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L19 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" /></svg>;
+
 const DiceIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><path d="M16 8h.01" /><path d="M8 8h.01" /><path d="M8 16h.01" /><path d="M16 16h.01" /><path d="M12 12h.01" /></svg>;
 const ResetIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>;
 
@@ -48,9 +48,7 @@ const App: React.FC = () => {
   const [speeds, setSpeeds] = useState<RotationSpeeds>(DEFAULT_SPEEDS);
   const [currentPreset, setCurrentPreset] = useState<PresetKey>('normal');
 
-  // Gemini State
-  const [aiInsight, setAiInsight] = useState<string | null>(null);
-  const [isLoadingInsight, setIsLoadingInsight] = useState(false);
+
 
   const currentShape = SHAPES[currentShapeKey];
 
@@ -71,7 +69,7 @@ const App: React.FC = () => {
     const keys = Object.keys(SHAPES);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     setCurrentShapeKey(randomKey);
-    setAiInsight(null);
+
 
     // Random Speeds
     const randS = () => (Math.random() * 0.06) - 0.03; // Slightly reduced range for sanity
@@ -90,16 +88,10 @@ const App: React.FC = () => {
     setCurrentPreset('normal');
     setScale(1);
     setIsPlaying(true);
-    setAiInsight(null);
+
   };
 
-  const fetchInsight = async () => {
-    setIsLoadingInsight(true);
-    setAiInsight(null);
-    const insight = await getShapeInsight(currentShape.name, `The user is viewing the ${currentShape.name} with rotation speeds: ${JSON.stringify(speeds)}`);
-    setAiInsight(insight);
-    setIsLoadingInsight(false);
-  };
+
 
   return (
     <div className="relative w-screen h-screen bg-slate-900 flex flex-col md:flex-row text-slate-200 overflow-hidden font-sans">
@@ -135,7 +127,7 @@ const App: React.FC = () => {
                 key={key}
                 onClick={() => {
                   setCurrentShapeKey(key);
-                  setAiInsight(null); // Clear old insight
+
                 }}
                 className={`px-4 py-3 rounded-lg text-left transition-all ${currentShapeKey === key
                     ? 'bg-slate-700 text-cyan-400 border border-slate-600 shadow-lg'
@@ -238,23 +230,7 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* AI Insight Button */}
-        <div className="p-6 border-t border-slate-700 bg-slate-800">
-          <button
-            onClick={fetchInsight}
-            disabled={isLoadingInsight}
-            className="w-full py-3 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-lg text-white font-semibold flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-50 transition-all shadow-lg"
-          >
-            <SparklesIcon />
-            {isLoadingInsight ? 'Consulting Hyper-Intelligence...' : 'Ask AI About This Shape'}
-          </button>
 
-          {aiInsight && (
-            <div className="mt-4 p-4 bg-slate-900/50 rounded-lg border border-purple-500/30 text-sm text-purple-200 leading-relaxed animate-in fade-in slide-in-from-bottom-2">
-              {aiInsight}
-            </div>
-          )}
-        </div>
       </aside>
 
       {/* Main Canvas Area */}
