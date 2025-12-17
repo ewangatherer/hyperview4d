@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       host: '0.0.0.0',
     },
-    base: './', // Use relative paths for GitHub Pages compatibility
+    base: '/hyperview4d/', // Use repo name for GitHub Pages compatibility
     plugins: [react()],
     define: {
     },
